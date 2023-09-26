@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Página</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            margin: 0 auto;
+        }
+
+        .navbar-button {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #737373;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #353535 !important;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #333;
+        }
+
+
+        .sidebar-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 36px;
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+
+        .accordion {
+            background-color: transparent;
+            border: none;
+            text-align: left;
+            width: 100%;
+            padding: 10px 15px;
+            cursor: pointer;
+            outline: none;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .accordion:hover {
+            background-color: #eee;
+        }
+
+        .panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+            background-color: #fff;
+        }
+
+        .panel a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .panel a:hover {
+            background-color: #ddd;
+        }
+
+
+        .accordion-title {
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="navbar-button" onclick="openNav()">☰</div>
+        <div class="navbar-title"><img src="logo.png" width="300px"></div>
+    </div>
+
+
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-button" onclick="closeNav()">×</div>
+
+        <button class="accordion" onclick="togglePanel('link1')"><span class="accordion-title">Cursos</span></button>
+        <div class="panel" id="link1">
+            <a href="consultaCurso.html">Consultar Cursos</a>
+            <a href="cadastraCurso.html">Cadastrar Cursos</a>
+        </div>
+        <button class="accordion" onclick="togglePanel('link2')"><span
+                class="accordion-title">Professores</span></button>
+        <div class="panel" id="link2">
+            <a href="consultaProfessor.html">Consultar Professores</a>
+            <a href="cadastraProfessor.html">Cadastrar Professores</a>
+        </div>
+        <button class="accordion" onclick="togglePanel('link3')"><span class="accordion-title">Alunos</span></button>
+        <div class="panel" id="link3">
+            <a href="consultaAluno.html">Consultar Alunos</a>
+            <a href="cadastraAluno.html">Cadastrar Alunos</a>
+        </div>
+        <button class="accordion" onclick="togglePanel('link4')"><span
+                class="accordion-title">Administradores</span></button>
+        <div class="panel" id="link4">
+            <a href="consultaAdmin.html">Consultar Administradores</a>
+            <a href="cadastraAdmin.html">Cadastrar Professores</a>
+        </div>
+    </div>
+
+    <div id="content" style="margin-left: 0; padding: 20px;">
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.getElementById("content").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("content").style.marginLeft = "0";
+            var accordions = document.querySelectorAll(".panel");
+            accordions.forEach(function (accordion) {
+                accordion.style.maxHeight = "0";
+            });
+        }
+
+        function togglePanel(panelId) {
+            var panel = document.getElementById(panelId);
+            var accordions = document.querySelectorAll(".panel");
+            accordions.forEach(function (accordion) {
+                if (accordion.id !== panelId) {
+                    accordion.style.maxHeight = "0";
+                }
+            });
+            if (panel.style.maxHeight === "0px" || panel.style.maxHeight === "") {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            } else {
+                panel.style.maxHeight = "0";
+            }
+        }
+    </script>
+</body>
+
+</html>
