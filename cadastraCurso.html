@@ -1,0 +1,133 @@
+<html>
+
+<head>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            margin: 0 auto;
+        }
+
+        .navbar-button {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .form-container {
+            width: 500px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-button"><a href="home.html"><img src="retornar.png" width="10px"></a></div>
+        <div class="navbar-title"><img src="logo.png" width="300px"></div>
+    </div>
+
+
+    <div class="form-container">
+
+        <h2 class="form-title">Cadastro de Curso</h2>
+        <form>
+            <label for="nome">Nome do curso:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="descricao">Descrição do curso:</label>
+            <input type="text" id="descricao" name="descricao" required>
+
+            <label for="carga">Carga horária do curso (em horas):</label>
+            <input type="number" id="cargaHoraria" name="cargaHoraria" required>
+
+            <label for="valor">Valor do curso (em reais):</label>
+            <input type="text" id="valor" name="valor" required>
+
+            <button type="button" id="createButton">Enviar</button> 
+        </form>
+    </div>>
+    <script>
+        Parse.initialize("WogVC7sXRQ0XuvdgZzv5Ssy2qWgcz7KI0iC0CwWo", "bAQ5mZnMx5kSpnDKbjxsaj2Luxw8pu7MggNvKz4T"); 
+         Parse.serverURL = "https://parseapi.back4app.com/";
+
+       
+        async function createParseCurso() {
+            let curso = new Parse.Object("Curso");
+            curso.set("nome", document.getElementById("nome").value);
+            curso.set("descricao", document.getElementById("descricao").value);
+            curso.set("cargaHoraria", document.getElementById("cargaHoraria").value);
+            curso.set("valor", document.getElementById("valor").value);
+            try {
+                curso = await curso.save();
+                if (curso !== null) {
+                    alert(
+                        `Curso cadastrado com sucesso`
+                    ); 
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        let createButton = document.getElementById("createButton");
+
+        createButton.addEventListener("click", createParseCurso); 
+    </script>
+</body>
+
+</html>

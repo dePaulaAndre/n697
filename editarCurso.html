@@ -1,0 +1,139 @@
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+
+        .navbar-title {
+            font-size: 24px;
+            margin: 0 auto;
+        }
+
+        .navbar-button {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        form {
+            width: 500px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-button"><a href="consultaCurso.html"><img src="retornar.png" width="10px"></a></div>
+        <div class="navbar-title"><img src="logo.png" width="300px"></div>
+    </div class="formulario-container">
+    <div class="formulario-container">
+        <form id="formulario">
+            <label for="nome">Nome do curso:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="descricao">Descrição do curso:</label>
+            <input type="text" id="descricao" name="descricao" required>
+
+            <label for="cargaHoraria">Carga horária do curso:</label>
+            <input type="number" id="cargaHoraria" name="cargaHoraria" required>
+
+            <label for="valor">Valor do curso:</label>
+            <input type="text" id="valor" name="valor" required>
+
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+    <script>
+        Parse.initialize("WogVC7sXRQ0XuvdgZzv5Ssy2qWgcz7KI0iC0CwWo", "bAQ5mZnMx5kSpnDKbjxsaj2Luxw8pu7MggNvKz4T");
+        Parse.serverURL = "https://parseapi.back4app.com/";
+
+        let formulario = document.getElementById("formulario");
+
+        let nome = document.getElementById("nome");
+        let descricao = document.getElementById("descricao");
+        let cargaHoraria = document.getElementById("cargaHoraria");
+        let valor = document.getElementById("valor");
+
+        let id = new URLSearchParams(window.location.search).get("id");
+
+        let query = new Parse.Query("Curso");
+
+        query.get(id).then(function (curso) {
+            nome.value = curso.get("nome");
+            descricao.value = curso.get("descricao");
+            cargaHoraria.value = curso.get("cargaHoraria");
+            valor.value = curso.get("valor");
+
+            formulario.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                curso.set("nome", nome.value);
+                curso.set("descricao", descricao.value);
+                curso.set("cargaHoraria", cargaHoraria.value);
+                curso.set("valor", valor.value);
+
+                curso.save().then(function () {
+                    alert("Dados atualizados com sucesso!");
+
+                    window.history.back();
+
+                }).catch(function (error) {
+                    alert("Erro ao atualizar os dados: " + error.message);
+
+                });
+            });
+
+        }).catch(function (error) {
+            alert("Erro ao obter os dados: " + error.message);
+
+        });
+    </script>
+
+</body>
+
+</html>
